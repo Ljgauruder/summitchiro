@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Summit Accident Clinic | Superior MVA Chiropractic Recovery • West Jordan, UT</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+    
+    :root {
+      --primary: 13 148 136;
+      --primary-light: 240 253 250;
+      --body-bg: 255 255 255;
+    }
+    
+    .theme-emerald { --primary: 16 185 129; --primary-light: 236 253 245; }
+    .theme-navy { --primary: 15 23 42; --primary-light: 241 245 255; --body-bg: 248 250 252; }
+    .theme-purple { --primary: 124 58 237; --primary-light: 250 245 255; }
+    .theme-rose { --primary: 190 18 60; --primary-light: 255 241 242; }
+    .theme-amber { --primary: 245 158 11; --primary-light: 255 247 237; }
+    
+    body { 
+      font-family: 'Inter', system_ui, -apple-system, sans-serif; 
+      background-color: rgb(var(--body-bg));
+    }
+    .theme-serif body { 
+      font-family: 'Playfair Display', Georgia, serif; 
+    }
+    
+    .hero-bg { 
+      background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://picsum.photos/id/1015/2000/1200'); 
+      background-size: cover; 
+      background-position: center; 
+    }
+    .team-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .team-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15); }
+    .btn-primary { background-color: rgb(var(--primary)); }
+    .btn-primary:hover { background-color: rgb(var(--primary) / 0.9); }
+
+    #mobile-menu { animation: slideDown 0.3s ease forwards; }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="font-sans text-gray-800">
+
+  <!-- TEMPORARY THEME SWITCHER (fully active) -->
+  <div id="theme-switcher" class="fixed top-4 right-4 bg-white shadow-2xl rounded-3xl p-5 z-[100] border border-gray-200 w-80 max-h-[85vh] overflow-auto">
+    <p class="font-semibold text-sm mb-4 flex items-center gap-2">
+      <i class="fa-solid fa-palette"></i> TEMPORARY THEME SWITCHER (Remove Later)
+    </p>
+    <div class="grid grid-cols-2 gap-3 text-sm">
+      <button onclick="applyTheme('teal')" class="theme-btn active px-4 py-3 rounded-2xl border border-teal-200 bg-teal-50 hover:bg-teal-100">Teal Fresh (Default)</button>
+      <button onclick="applyTheme('emerald')" class="theme-btn px-4 py-3 rounded-2xl border hover:bg-emerald-100">Emerald Healing</button>
+      <button onclick="applyTheme('navy')" class="theme-btn px-4 py-3 rounded-2xl border hover:bg-slate-100">Navy Trust</button>
+      <button onclick="applyTheme('purple')" class="theme-btn px-4 py-3 rounded-2xl border hover:bg-purple-100">Purple Premium</button>
+      <button onclick="applyTheme('rose')" class="theme-btn px-4 py-3 rounded-2xl border hover:bg-rose-100">Rose Warm</button>
+      <button onclick="applyTheme('amber')" class="theme-btn px-4 py-3 rounded-2xl border hover:bg-amber-100">Amber Energy</button>
+      <button onclick="applyTheme('serif')" class="theme-btn col-span-2 px-4 py-3 rounded-2xl border hover:bg-amber-100">Serif Professional</button>
+    </div>
+    <button onclick="removeThemeSwitcher()" class="mt-6 text-xs text-red-500 hover:text-red-600 w-full text-center">× Remove This Panel Later</button>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-5">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <i class="fa-solid fa-spine text-4xl text-[rgb(var(--primary))]"></i>
+          <div>
+            <span class="text-2xl font-bold text-gray-900 tracking-tight">Summit Accident Clinic</span>
+            <p class="text-xs text-[rgb(var(--primary))] -mt-1">West Jordan, UT</p>
+          </div>
+        </div>
+        
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center gap-10 text-base font-medium">
+          <a href="#home" class="en hover:text-[rgb(var(--primary))] transition">Home</a>
+          <a href="#home" class="es hidden hover:text-[rgb(var(--primary))] transition">Inicio</a>
+          <a href="#about" class="en hover:text-[rgb(var(--primary))] transition">About</a>
+          <a href="#about" class="es hidden hover:text-[rgb(var(--primary))] transition">Acerca de</a>
+          <a href="#contact" class="en hover:text-[rgb(var(--primary))] transition">Contact</a>
+          <a href="#contact" class="es hidden hover:text-[rgb(var(--primary))] transition">Contacto</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div class="flex border rounded-full overflow-hidden text-sm font-medium">
+            <button onclick="switchLanguage('en')" id="btn-en" class="px-5 py-2 bg-[rgb(var(--primary))] text-white">EN</button>
+            <button onclick="switchLanguage('es')" id="btn-es" class="px-5 py-2 hover:bg-gray-100">ES</button>
+          </div>
+          <a href="tel:801-555-1234" class="btn-primary text-white px-6 py-3 rounded-full font-semibold flex items-center gap-2 text-sm md:text-base">
+            <i class="fa-solid fa-phone"></i> <span class="hidden sm:inline">Call Now</span>
+          </a>
+          
+          <button id="mobile-menu-btn" class="md:hidden text-3xl text-gray-700 p-2">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Mobile Full-Screen Menu -->
+    <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-white z-[60] pt-20 px-6 overflow-auto">
+      <div class="flex flex-col gap-8 text-2xl font-medium text-center">
+        <a href="#home" onclick="toggleMobileMenu()" class="en py-4 border-b hover:text-[rgb(var(--primary))]">Home</a>
+        <a href="#home" onclick="toggleMobileMenu()" class="es hidden py-4 border-b hover:text-[rgb(var(--primary))]">Inicio</a>
+        <a href="#about" onclick="toggleMobileMenu()" class="en py-4 border-b hover:text-[rgb(var(--primary))]">About</a>
+        <a href="#about" onclick="toggleMobileMenu()" class="es hidden py-4 border-b hover:text-[rgb(var(--primary))]">Acerca de</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="en py-4 border-b hover:text-[rgb(var(--primary))]">Contact</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="es hidden py-4 border-b hover:text-[rgb(var(--primary))]">Contacto</a>
+      </div>
+      <button onclick="toggleMobileMenu()" class="absolute top-8 right-8 text-4xl text-gray-400">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HOME HERO -->
+  <section id="home" class="hero-bg text-white py-20 md:py-28">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <h1 class="hero-text text-4xl md:text-6xl font-bold leading-tight mb-6 en">
+        Superior Quality Recovery After Motor Vehicle Accidents
+      </h1>
+      <h1 class="hero-text text-4xl md:text-6xl font-bold leading-tight mb-6 es hidden">
+        Recuperación de Calidad Superior Después de Accidentes de Tránsito
+      </h1>
+      
+      <p class="text-xl md:text-2xl mb-10 max-w-2xl mx-auto en">
+        Expert chiropractic care and thorough doctor's exam for new patients in West Jordan, UT. You're in expert hands for fast, lasting MVA recovery.
+      </p>
+      <p class="text-xl md:text-2xl mb-10 max-w-2xl mx-auto es hidden">
+        Atención quiropráctica experta y examen médico completo para nuevos pacientes en West Jordan, UT. Usted está en manos expertas para una recuperación rápida y duradera de accidentes.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="#contact" class="bg-white text-emerald-700 hover:bg-emerald-50 px-8 py-5 rounded-3xl text-xl font-semibold flex items-center justify-center gap-2 en">
+          Schedule Your Doctor's Exam & Intake
+        </a>
+        <a href="#contact" class="bg-white text-emerald-700 hover:bg-emerald-50 px-8 py-5 rounded-3xl text-xl font-semibold flex items-center justify-center gap-2 es hidden">
+          Programe Su Examen con el Doctor e Ingreso
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bilingual Support -->
+  <div class="bg-emerald-50 py-8">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <p class="text-2xl font-semibold text-emerald-700 en">¡Hablamos Español! Our dedicated assistants provide full Spanish translation during every visit and intake.</p>
+      <p class="text-2xl font-semibold text-emerald-700 es hidden">¡Hablamos Español! Nuestros asistentes dedicados brindan traducción completa al español durante cada visita e ingreso.</p>
+    </div>
+  </div>
+
+  <!-- How We Help -->
+  <section class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-12 en">How We Help MVA Patients Recover</h2>
+      <h2 class="text-4xl font-bold text-center mb-12 es hidden">Cómo Ayudamos a los Pacientes de Accidentes a Recuperarse</h2>
+      
+      <div class="grid md:grid-cols-4 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto bg-emerald-100 rounded-3xl flex items-center justify-center text-4xl mb-4">📋</div>
+          <h3 class="font-semibold text-xl mb-2 en">Initial Consultation &amp; Thorough Evaluation</h3>
+          <h3 class="font-semibold text-xl mb-2 es hidden">Consulta Inicial y Evaluación Completa</h3>
+          <p class="text-gray-600 en">Detailed assessment to understand your MVA injuries</p>
+          <p class="text-gray-600 es hidden">Evaluación detallada para entender sus lesiones por accidente</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto bg-emerald-100 rounded-3xl flex items-center justify-center text-4xl mb-4">🦴</div>
+          <h3 class="font-semibold text-xl mb-2 en">Effective Chiropractic Adjustments</h3>
+          <h3 class="font-semibold text-xl mb-2 es hidden">Ajustes Quiroprácticos Efectivos</h3>
+          <p class="text-gray-600 en">Safe, precise care that restores alignment and function</p>
+          <p class="text-gray-600 es hidden">Cuidado seguro y preciso que restaura la alineación y función</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto bg-emerald-100 rounded-3xl flex items-center justify-center text-4xl mb-4">⚡</div>
+          <h3 class="font-semibold text-xl mb-2 en">Rehabilitation Therapies</h3>
+          <h3 class="font-semibold text-xl mb-2 es hidden">Terapias de Rehabilitación</h3>
+          <p class="text-gray-600 en">Heat, ice, electric stim &amp; more to reduce pain &amp; speed healing</p>
+          <p class="text-gray-600 es hidden">Calor, hielo, estimulación eléctrica y más para reducir el dolor y acelerar la curación</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto bg-emerald-100 rounded-3xl flex items-center justify-center text-4xl mb-4">🌟</div>
+          <h3 class="font-semibold text-xl mb-2 en">Long-Term Quality Recovery</h3>
+          <h3 class="font-semibold text-xl mb-2 es hidden">Recuperación de Calidad a Largo Plazo</h3>
+          <p class="text-gray-600 en">Get back to living pain-free with lasting results</p>
+          <p class="text-gray-600 es hidden">Regrese a vivir sin dolor con resultados duraderos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-4 en">Meet the Team Dedicated to Your Quality MVA Recovery</h2>
+      <h2 class="text-4xl font-bold text-center mb-4 es hidden">Conozca al Equipo Dedicado a Su Recuperación de Calidad por Accidentes</h2>
+      <p class="text-center text-gray-600 mb-12 max-w-xl mx-auto en">You're in excellent hands with our experienced chiropractic professionals</p>
+      <p class="text-center text-gray-600 mb-12 max-w-xl mx-auto es hidden">Usted está en excelentes manos con nuestros profesionales quiroprácticos experimentados</p>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="team-card bg-white rounded-3xl overflow-hidden shadow">
+          <img src="https://picsum.photos/id/1015/600/400" alt="Full Team" class="w-full h-64 object-cover">
+          <div class="p-6">
+            <h3 class="font-bold text-xl en">Our Full Team</h3>
+            <h3 class="font-bold text-xl es hidden">Nuestro Equipo Completo</h3>
+            <p class="text-emerald-600 en">Dedicated to superior MVA recovery • Updated yearly</p>
+            <p class="text-emerald-600 es hidden">Dedicados a la recuperación superior de accidentes • Actualizado anualmente</p>
+          </div>
+        </div>
+        <div class="team-card bg-white rounded-3xl overflow-hidden shadow">
+          <img src="https://picsum.photos/id/64/600/400" alt="Dr. Jeremy Gauruder" class="w-full h-64 object-cover">
+          <div class="p-6">
+            <h3 class="font-bold text-xl">Dr. Jeremy Gauruder, DC</h3>
+            <p class="text-emerald-600 en">Lead Chiropractor &amp; MVA Recovery Specialist</p>
+            <p class="text-emerald-600 es hidden">Quiropráctico Principal y Especialista en Recuperación de Accidentes</p>
+          </div>
+        </div>
+        <div class="team-card bg-white rounded-3xl overflow-hidden shadow">
+          <img src="https://picsum.photos/id/1011/600/400" alt="Head Assistant" class="w-full h-64 object-cover">
+          <div class="p-6">
+            <h3 class="font-bold text-xl">Maria Lopez, CMA</h3>
+            <p class="text-emerald-600 en">Head Chiropractic Assistant &amp; Spanish Translator</p>
+            <p class="text-emerald-600 es hidden">Asistente Principal de Quiropráctica y Traductora de Español</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-5xl font-bold text-center mb-8 en">Our Mission</h2>
+      <h2 class="text-5xl font-bold text-center mb-8 es hidden">Nuestra Misión</h2>
+      
+      <div class="prose prose-lg mx-auto text-center en">
+        <p>At Summit Accident Clinic, our purpose is to deliver superior-quality chiropractic care focused on full recovery from motor vehicle accidents. We combine advanced techniques, compassionate service, and seamless Spanish support to help patients in West Jordan regain their health and quality of life faster.</p>
+      </div>
+      <div class="prose prose-lg mx-auto text-center es hidden">
+        <p>En Summit Accident Clinic, nuestro propósito es brindar atención quiropráctica de calidad superior enfocada en la recuperación completa de accidentes automovilísticos. Combinamos técnicas avanzadas, servicio compasivo y apoyo en español sin interrupciones para ayudar a los pacientes en West Jordan a recuperar su salud y calidad de vida más rápido.</p>
+      </div>
+
+      <div class="mt-16 grid md:grid-cols-2 gap-12">
+        <div>
+          <h3 class="text-2xl font-semibold mb-6 en">What Makes Us Stand Out</h3>
+          <ul class="space-y-4 text-lg en">
+            <li class="flex gap-3"><span class="text-emerald-600">✓</span> Specialized MVA protocols</li>
+            <li class="flex gap-3"><span class="text-emerald-600">✓</span> Effective, evidence-based adjustments</li>
+            <li class="flex gap-3"><span class="text-emerald-600">✓</span> Dedicated Spanish-speaking assistants</li>
+            <li class="flex gap-3"><span class="text-emerald-600">✓</span> Fast scheduling for new patients</li>
+          </ul>
+        </div>
+        <div class="es hidden">
+          <h3 class="text-2xl font-semibold mb-6">Lo que Nos Diferencia</h3>
+          <ul class="space-y-4 text-lg">
+            <li class="flex gap-3"><span class="text-emerald-600">✓</span> Protocolos especializados para accidentes</li>
+            <li class="flex gap-3"><span class="text-emerald-600">✓</span> Ajustes efectivos basados en evidencia</li>
+            <li class="flex gap-3"><span class="text-emerald-600">✓</span> Asistentes dedicados que hablan español</li>
+            <li class="flex gap-3"><span class="text-emerald-600">✓</span> Programación rápida para nuevos pacientes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-20 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16">
+      <div>
+        <h2 class="text-4xl font-bold mb-8 en">Start Your Recovery Today</h2>
+        <h2 class="text-4xl font-bold mb-8 es hidden">Comience Su Recuperación Hoy</h2>
+        
+        <div class="space-y-8">
+          <div class="flex gap-4">
+            <i class="fa-solid fa-phone text-3xl text-emerald-600 mt-1"></i>
+            <div>
+              <p class="font-semibold text-xl">(801) 555-1234</p>
+              <p class="text-emerald-600 en">24/7 Voicemail • Spanish Available</p>
+              <p class="text-emerald-600 es hidden">Buzón de voz 24/7 • Español Disponible</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <i class="fa-solid fa-location-dot text-3xl text-emerald-600 mt-1"></i>
+            <div>
+              <p class="font-semibold text-xl">West Jordan, UT</p>
+              <p class="text-gray-500 en">Serving the entire Salt Lake Valley</p>
+              <p class="text-gray-500 es hidden">Sirviendo todo el Valle de Salt Lake</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12">
+          <h3 class="font-semibold mb-4 text-xl en">What to Prepare for Your Doctor's Exam &amp; Intake</h3>
+          <h3 class="font-semibold mb-4 text-xl es hidden">Qué Preparar para Su Examen con el Doctor e Ingreso</h3>
+          <ol class="list-decimal pl-5 space-y-3 text-gray-700">
+            <li class="en">Insurance / MVA claim information</li>
+            <li class="es hidden">Información de seguro / reclamo de accidente</li>
+            <li class="en">Any police report or accident details</li>
+            <li class="es hidden">Cualquier informe policial o detalles del accidente</li>
+            <li class="en">Comfortable clothing for examination</li>
+            <li class="es hidden">Ropa cómoda para el examen</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Blocky Contact Form -->
+      <div class="bg-white p-10 rounded-3xl shadow-xl">
+        <form id="contactForm" class="space-y-6">
+          <div class="en space-y-5">
+            <input type="text" placeholder="Full Name" class="w-full px-6 py-5 border border-gray-300 rounded-2xl focus:outline-none focus:border-[rgb(var(--primary))] text-base" required>
+            <input type="tel" placeholder="Phone Number" class="w-full px-6 py-5 border border-gray-300 rounded-2xl focus:outline-none focus:border-[rgb(var(--primary))] text-base" required>
+            <input type="email" placeholder="Email Address" class="w-full px-6 py-5 border border-gray-300 rounded-2xl focus:outline-none focus:border-[rgb(var(--primary))] text-base">
+            <select class="w-full px-6 py-5 border border-gray-300 rounded-2xl focus:outline-none focus:border-[rgb(var(--primary))] text-base">
+              <option value="en">Preferred Language – English</option>
+              <option value="es">Preferred Language – Español</option>
+            </select>
+            <textarea placeholder="Tell us about your accident and symptoms..." rows="5" class="w-full px-6 py-5 border border-gray-300 rounded-2xl focus:outline-none focus:border-[rgb(var(--primary))] text-base"></textarea>
+          </div>
+          
+          <div class="es hidden space-y-5">
+            <input type="text" placeholder="Nombre Completo" class="w-full px-6 py-5 border border-gray-300 rounded-2xl focus:outline-none focus:border-[rgb(var(--primary))] text-base" required>
+            <input type="tel" placeholder="Número de Teléfono" class="w-full px-6 py-5 border border-gray-300 rounded-2xl focus:outline-none focus:border-[rgb(var(--primary))] text-base" required>
+            <input type="email" placeholder="Correo Electrónico" class="w-full px-6 py-5 border border-gray-300 rounded-2xl focus:outline-none focus:border-[rgb(var(--primary))] text-base">
+            <select class="w-full px-6 py-5 border border-gray-300 rounded-2xl focus:outline-none focus:border-[rgb(var(--primary))] text-base">
+              <option value="en">Idioma Preferido – English</option>
+              <option value="es">Idioma Preferido – Español</option>
+            </select>
+            <textarea placeholder="Cuéntenos sobre su accidente y síntomas..." rows="5" class="w-full px-6 py-5 border border-gray-300 rounded-2xl focus:outline-none focus:border-[rgb(var(--primary))] text-base"></textarea>
+          </div>
+          
+          <button type="submit" class="w-full btn-primary text-white py-7 rounded-3xl font-semibold text-xl en">Submit &amp; Schedule Your Exam →</button>
+          <button type="submit" class="w-full btn-primary text-white py-7 rounded-3xl font-semibold text-xl es hidden">Enviar y Programar Su Examen →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <p class="text-2xl font-bold mb-2">Summit Accident Clinic</p>
+      <p class="mb-8 en">Superior Quality MVA Chiropractic Care • West Jordan, UT</p>
+      <p class="mb-8 es hidden">Atención Quiropráctica de Calidad Superior para Accidentes • West Jordan, UT</p>
+      <p class="text-sm opacity-70 en">© 2026 Summit Accident Clinic • You're in expert hands for your recovery</p>
+      <p class="text-sm opacity-70 es hidden">© 2026 Summit Accident Clinic • Estás en manos expertas para tu recuperación</p>
+    </div>
+  </footer>
+
+  <script>
+    function applyTheme(theme) {
+      document.body.classList.remove('theme-emerald','theme-navy','theme-purple','theme-rose','theme-amber','theme-serif');
+      if (theme !== 'teal') document.body.classList.add(`theme-${theme}`);
+      
+      document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      
+      const primary = theme === 'emerald' ? '16 185 129' : 
+                      theme === 'navy' ? '15 23 42' : 
+                      theme === 'purple' ? '124 58 237' :
+                      theme === 'rose' ? '190 18 60' :
+                      theme === 'amber' ? '245 158 11' : '13 148 136';
+      document.documentElement.style.setProperty('--primary', primary);
+    }
+
+    function removeThemeSwitcher() {
+      document.getElementById('theme-switcher').remove();
+    }
+
+    function switchLanguage(lang) {
+      document.querySelectorAll('.en').forEach(el => el.classList.toggle('hidden', lang !== 'en'));
+      document.querySelectorAll('.es').forEach(el => el.classList.toggle('hidden', lang !== 'es'));
+      
+      document.getElementById('btn-en').classList.toggle('bg-[rgb(var(--primary))]', lang === 'en');
+      document.getElementById('btn-es').classList.toggle('bg-[rgb(var(--primary))]', lang === 'es');
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert("Thank you! Our team will contact you within minutes to schedule your Doctor's Exam & Intake.\n\n¡Gracias! Nuestro equipo le contactará en minutos para programar su examen con el doctor.");
+    });
+
+    // Initialize
+    switchLanguage('en');
+    applyTheme('teal');
+  </script>
+</body>
+</html>
