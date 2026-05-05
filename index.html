@@ -40,16 +40,25 @@
     .btn-primary { background-color: rgb(var(--primary)); }
     .btn-primary:hover { background-color: rgb(var(--primary) / 0.9); }
 
-    #mobile-menu { animation: slideDown 0.3s ease forwards; }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-20px); }
+    /* Balanced Navbar Spacing */
+    .nav-container { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .nav-links { gap: 2rem; }
+    @media (max-width: 1024px) { .nav-links { gap: 1.5rem; } }
+    @media (max-width: 768px) { .nav-links { gap: 1.25rem; } }
+
+    /* Mobile Dropdown Menu */
+    .mobile-dropdown {
+      animation: dropdownFade 0.25s ease forwards;
+    }
+    @keyframes dropdownFade {
+      from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body class="font-sans text-gray-800">
 
-  <!-- TEMPORARY THEME SWITCHER (fully active) -->
+  <!-- TEMPORARY THEME SWITCHER -->
   <div id="theme-switcher" class="fixed top-4 right-4 bg-white shadow-2xl rounded-3xl p-5 z-[100] border border-gray-200 w-80 max-h-[85vh] overflow-auto">
     <p class="font-semibold text-sm mb-4 flex items-center gap-2">
       <i class="fa-solid fa-palette"></i> TEMPORARY THEME SWITCHER (Remove Later)
@@ -69,29 +78,33 @@
   <!-- Navbar -->
   <nav class="bg-white shadow-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-5">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
+      <div class="nav-container">
+        <!-- Logo -->
+        <div class="flex items-center gap-3 flex-shrink-0">
           <i class="fa-solid fa-spine text-4xl text-[rgb(var(--primary))]"></i>
           <div>
             <span class="text-2xl font-bold text-gray-900 tracking-tight">Summit Accident Clinic</span>
             <p class="text-xs text-[rgb(var(--primary))] -mt-1">West Jordan, UT</p>
           </div>
         </div>
-        
+
         <!-- Desktop Menu -->
-        <div class="hidden md:flex items-center gap-10 text-base font-medium">
-          <a href="#home" class="en hover:text-[rgb(var(--primary))] transition">Home</a>
-          <a href="#home" class="es hidden hover:text-[rgb(var(--primary))] transition">Inicio</a>
-          <a href="#about" class="en hover:text-[rgb(var(--primary))] transition">About</a>
-          <a href="#about" class="es hidden hover:text-[rgb(var(--primary))] transition">Acerca de</a>
-          <a href="#contact" class="en hover:text-[rgb(var(--primary))] transition">Contact</a>
-          <a href="#contact" class="es hidden hover:text-[rgb(var(--primary))] transition">Contacto</a>
+        <div class="hidden md:flex items-center nav-links text-base font-medium">
+          <a href="#home" class="en hover:text-[rgb(var(--primary))] transition px-3">Home</a>
+          <a href="#home" class="es hidden hover:text-[rgb(var(--primary))] transition px-3">Inicio</a>
+          <a href="#about" class="en hover:text-[rgb(var(--primary))] transition px-3">About</a>
+          <a href="#about" class="es hidden hover:text-[rgb(var(--primary))] transition px-3">Acerca de</a>
+          <a href="#contact" class="en hover:text-[rgb(var(--primary))] transition px-3">Contact</a>
+          <a href="#contact" class="es hidden hover:text-[rgb(var(--primary))] transition px-3">Contacto</a>
         </div>
 
         <div class="flex items-center gap-4">
+          <!-- Language Toggle -->
           <div class="flex border rounded-full overflow-hidden text-sm font-medium">
-            <button onclick="switchLanguage('en')" id="btn-en" class="px-5 py-2 bg-[rgb(var(--primary))] text-white">EN</button>
-            <button onclick="switchLanguage('es')" id="btn-es" class="px-5 py-2 hover:bg-gray-100">ES</button>
+            <button onclick="switchLanguage('en')" id="btn-en" 
+                    class="px-5 py-2 transition-all">EN</button>
+            <button onclick="switchLanguage('es')" id="btn-es" 
+                    class="px-5 py-2 transition-all">ES</button>
           </div>
           <a href="tel:801-555-1234" class="btn-primary text-white px-6 py-3 rounded-full font-semibold flex items-center gap-2 text-sm md:text-base">
             <i class="fa-solid fa-phone"></i> <span class="hidden sm:inline">Call Now</span>
@@ -103,20 +116,17 @@
         </div>
       </div>
     </div>
-    
-    <!-- Mobile Full-Screen Menu -->
-    <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-white z-[60] pt-20 px-6 overflow-auto">
-      <div class="flex flex-col gap-8 text-2xl font-medium text-center">
-        <a href="#home" onclick="toggleMobileMenu()" class="en py-4 border-b hover:text-[rgb(var(--primary))]">Home</a>
-        <a href="#home" onclick="toggleMobileMenu()" class="es hidden py-4 border-b hover:text-[rgb(var(--primary))]">Inicio</a>
-        <a href="#about" onclick="toggleMobileMenu()" class="en py-4 border-b hover:text-[rgb(var(--primary))]">About</a>
-        <a href="#about" onclick="toggleMobileMenu()" class="es hidden py-4 border-b hover:text-[rgb(var(--primary))]">Acerca de</a>
-        <a href="#contact" onclick="toggleMobileMenu()" class="en py-4 border-b hover:text-[rgb(var(--primary))]">Contact</a>
-        <a href="#contact" onclick="toggleMobileMenu()" class="es hidden py-4 border-b hover:text-[rgb(var(--primary))]">Contacto</a>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t shadow-lg mobile-dropdown">
+      <div class="px-6 py-6 flex flex-col gap-5 text-lg font-medium">
+        <a href="#home" onclick="toggleMobileMenu()" class="en hover:text-[rgb(var(--primary))] py-2">Home</a>
+        <a href="#home" onclick="toggleMobileMenu()" class="es hidden hover:text-[rgb(var(--primary))] py-2">Inicio</a>
+        <a href="#about" onclick="toggleMobileMenu()" class="en hover:text-[rgb(var(--primary))] py-2">About</a>
+        <a href="#about" onclick="toggleMobileMenu()" class="es hidden hover:text-[rgb(var(--primary))] py-2">Acerca de</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="en hover:text-[rgb(var(--primary))] py-2">Contact</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="es hidden hover:text-[rgb(var(--primary))] py-2">Contacto</a>
       </div>
-      <button onclick="toggleMobileMenu()" class="absolute top-8 right-8 text-4xl text-gray-400">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
     </div>
   </nav>
 
@@ -164,28 +174,36 @@
       
       <div class="grid md:grid-cols-4 gap-8">
         <div class="text-center">
-          <div class="w-16 h-16 mx-auto bg-emerald-100 rounded-3xl flex items-center justify-center text-4xl mb-4">📋</div>
+          <div class="w-16 h-16 mx-auto bg-emerald-100 rounded-3xl flex items-center justify-center text-4xl mb-4 text-emerald-600">
+            <i class="fa-solid fa-clipboard-check"></i>
+          </div>
           <h3 class="font-semibold text-xl mb-2 en">Initial Consultation &amp; Thorough Evaluation</h3>
           <h3 class="font-semibold text-xl mb-2 es hidden">Consulta Inicial y Evaluación Completa</h3>
           <p class="text-gray-600 en">Detailed assessment to understand your MVA injuries</p>
           <p class="text-gray-600 es hidden">Evaluación detallada para entender sus lesiones por accidente</p>
         </div>
         <div class="text-center">
-          <div class="w-16 h-16 mx-auto bg-emerald-100 rounded-3xl flex items-center justify-center text-4xl mb-4">🦴</div>
+          <div class="w-16 h-16 mx-auto bg-emerald-100 rounded-3xl flex items-center justify-center text-4xl mb-4 text-emerald-600">
+            <i class="fa-solid fa-bone"></i>
+          </div>
           <h3 class="font-semibold text-xl mb-2 en">Effective Chiropractic Adjustments</h3>
           <h3 class="font-semibold text-xl mb-2 es hidden">Ajustes Quiroprácticos Efectivos</h3>
           <p class="text-gray-600 en">Safe, precise care that restores alignment and function</p>
           <p class="text-gray-600 es hidden">Cuidado seguro y preciso que restaura la alineación y función</p>
         </div>
         <div class="text-center">
-          <div class="w-16 h-16 mx-auto bg-emerald-100 rounded-3xl flex items-center justify-center text-4xl mb-4">⚡</div>
+          <div class="w-16 h-16 mx-auto bg-emerald-100 rounded-3xl flex items-center justify-center text-4xl mb-4 text-emerald-600">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
           <h3 class="font-semibold text-xl mb-2 en">Rehabilitation Therapies</h3>
           <h3 class="font-semibold text-xl mb-2 es hidden">Terapias de Rehabilitación</h3>
           <p class="text-gray-600 en">Heat, ice, electric stim &amp; more to reduce pain &amp; speed healing</p>
           <p class="text-gray-600 es hidden">Calor, hielo, estimulación eléctrica y más para reducir el dolor y acelerar la curación</p>
         </div>
         <div class="text-center">
-          <div class="w-16 h-16 mx-auto bg-emerald-100 rounded-3xl flex items-center justify-center text-4xl mb-4">🌟</div>
+          <div class="w-16 h-16 mx-auto bg-emerald-100 rounded-3xl flex items-center justify-center text-4xl mb-4 text-emerald-600">
+            <i class="fa-solid fa-award"></i>
+          </div>
           <h3 class="font-semibold text-xl mb-2 en">Long-Term Quality Recovery</h3>
           <h3 class="font-semibold text-xl mb-2 es hidden">Recuperación de Calidad a Largo Plazo</h3>
           <p class="text-gray-600 en">Get back to living pain-free with lasting results</p>
@@ -376,13 +394,23 @@
       document.querySelectorAll('.en').forEach(el => el.classList.toggle('hidden', lang !== 'en'));
       document.querySelectorAll('.es').forEach(el => el.classList.toggle('hidden', lang !== 'es'));
       
-      document.getElementById('btn-en').classList.toggle('bg-[rgb(var(--primary))]', lang === 'en');
-      document.getElementById('btn-es').classList.toggle('bg-[rgb(var(--primary))]', lang === 'es');
+      const btnEn = document.getElementById('btn-en');
+      const btnEs = document.getElementById('btn-es');
+      
+      if (lang === 'en') {
+        btnEn.classList.add('bg-[rgb(var(--primary))]', 'text-white');
+        btnEs.classList.remove('bg-[rgb(var(--primary))]', 'text-white');
+      } else {
+        btnEs.classList.add('bg-[rgb(var(--primary))]', 'text-white');
+        btnEn.classList.remove('bg-[rgb(var(--primary))]', 'text-white');
+      }
     }
 
     function toggleMobileMenu() {
       document.getElementById('mobile-menu').classList.toggle('hidden');
     }
+
+    document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
 
     document.getElementById('contactForm').addEventListener('submit', function(e) {
       e.preventDefault();
